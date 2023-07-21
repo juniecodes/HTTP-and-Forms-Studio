@@ -3,10 +3,39 @@
 <head>
 	<meta charset="utf-8">
 	<script>
+		let actions = {
+			"google": "https://www.google.com/search",
+			"duckDuckGo": "https://duckduckgo.com",
+			"bing": "https://www.bing.com/search",
+			"ask": "https://ask.com/web"
+		};
 		// TODO: create a handler
     window.addEventListener("load", function(){
         // TODO: register the handler
+		const submitBtn = document.querySelector("input[type='submit']");
+		submitBtn.addEventListener('click', setSearchEngine);
     });
+
+	function setSearchEngine(e) {
+		// Add validation to your submit handler to make sure that the user has both a search engine and entered a (non-empty) search term.
+		let searchBox = document.querySelector("input[name='q']");
+		let selectRadBtn = document.querySelector('input[name=engine]:checked');
+		let searchForm = document.getElementById('searchForm');
+
+
+		if (searchBox.value === '') {
+			window.alert('Need to have a search term');
+			e.preventDefault();
+		} 
+		
+		if (selectRadBtn === null) {
+			window.alert('Need to have a search provider selected');
+			e.preventDefault();
+		}
+
+		let selectedUrl = actions[selectRadBtn.value];
+		searchForm.setAttribute('action', selectedUrl);
+	}
 	</script>
 </head>
 
@@ -14,6 +43,19 @@
 
 	<form id="searchForm">
     <!-- TODO: add form elements -->
+	<!-- Create a text input within the form and set its name attribute to the value 'q'. -->
+	<input type="text" name="q">
+	
+	<!-- Create a radio group with one radio button for each search engine. Recall that radio buttons with the same name are grouped,
+	so use the same value for this attribute, "engine", on each radio button -->
+
+	<label><input type="radio" name="engine" value="google" >Google</label>
+	<label><input type="radio" name="engine" value="duckduckgo" >DuckDuckGo</label>
+	<label><input type="radio" name="engine" value="bing" >Bing</label>
+	<label><input type="radio" name="engine" value="ask" >Ask</label>
+
+	<input type="submit" value="Go!">
+	
 	</form>
 
 </body>
